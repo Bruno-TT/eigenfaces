@@ -13,8 +13,9 @@ import PIL
 from PIL import Image
 from PIL import ImageTk
 
-num_components=8
-slider_factor=5
+num_components=1
+slider_factor=2
+glitch_mode=True
 
 images=[]
 
@@ -76,7 +77,8 @@ def row_to_image(row, model, size):
     new_image=Array(transformed_array)
 
     #save as a temp file
-    imageio.imwrite("temp/TEMP.png", new_image.astype(np.uint8))
+    if glitch_mode:new_image=new_image.astype(np.uint8)
+    imageio.imwrite("temp/TEMP.png", new_image)
 
     # time.sleep(1)
 
@@ -98,9 +100,6 @@ def button_press_wrapper():
     while 1:display_image_from_sliders()
 
 def randomise_slider(slider, bounds):
-    # print(slider.config())
-    # min_ = slider.config()['from_']
-    # max_ = slider.config()['to']
     min_=int(min(bounds))
     max_=int(max(bounds))
     val=random.randint(min_, max_)
